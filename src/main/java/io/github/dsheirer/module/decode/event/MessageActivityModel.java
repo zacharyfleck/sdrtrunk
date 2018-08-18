@@ -22,7 +22,7 @@ import io.github.dsheirer.message.Message;
 import io.github.dsheirer.sample.Listener;
 
 import javax.swing.table.AbstractTableModel;
-import java.awt.*;
+import java.awt.EventQueue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -43,7 +43,7 @@ public class MessageActivityModel extends AbstractTableModel
 	protected int[] mColumnWidths = { 110, 110, 110, -1, -1 };
 
 	protected String[] mHeaders = new String[] { "Time",
-												 "Protocol",
+												 "MessageProtocol",
 												 "Error Check",
 												 "Message",
 												 "Binary" };
