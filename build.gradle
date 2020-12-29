@@ -146,16 +146,20 @@ def jdk_base = '/media/denny/WD250GB/java/bellsoft/'
 def jdk_linux_arm64 = jdk_base + 'linux-arm64/jdk-15'
 def jdk_linux_x86_64 = jdk_base + 'linux-x64/jdk-15'
 def jdk_osx_x86_64 = jdk_base + 'osx-x64/jdk-15.jdk'
+def jdk_osx_aarch64 = '/media/denny/WD250GB/java/azul/osx-aarch64/jdk-15.0.1.9'
 def jdk_windows_x86_64 = jdk_base + 'windows-x64/jdk-15'
+
 
 def file_jdk_linux_arm64 = new File(jdk_linux_arm64)
 def file_jdk_linux_x86_64 = new File(jdk_linux_x86_64)
 def file_jdk_osx_x86_64 = new File(jdk_osx_x86_64)
+def file_jdk_osx_aarch64 = new File(jdk_osx_aarch64)
 def file_jdk_windows_x86_64 = new File(jdk_windows_x86_64)
 
 def hasTargetJdk = file_jdk_linux_x86_64.exists() ||
         file_jdk_linux_arm64 ||
         file_jdk_osx_x86_64.exists() ||
+        file_jdk_osx_aarch64.exists() ||
         file_jdk_windows_x86_64.exists()
 
 runtime {
@@ -186,6 +190,15 @@ runtime {
         println("Skipping OS Image - OSX x86 64-bit JDK was not found at " + jdk_osx_x86_64);
     }
 
+    if(file_jdk_osx_aarch64.exists())
+    {
+        targetPlatform('osx-aarch64-v' + version, jdk_osx_aarch64)
+    }
+    else
+    {
+        println("Skipping OS Image - OSX ARM 64-bit JDK was not found at " + file_jdk_osx_aarch64);
+    }
+
     if(file_jdk_windows_x86_64.exists())
     {
         targetPlatform('windows-x86_64-v' + version, jdk_windows_x86_64)
@@ -209,11 +222,13 @@ tasks.runtime.doLast
     delete(fileTree('build/image/sdr-trunk-linux-arm64-v' + version + '/lib').include { it.name ==~ /javafx.*-(win|mac)\.jar/ })
     delete(fileTree('build/image/sdr-trunk-linux-x86_64-v' + version + '/lib').include { it.name ==~ /javafx.*-(win|mac)\.jar/ })
     delete(fileTree('build/image/sdr-trunk-osx-x86_64-v' + version + '/lib').include { it.name ==~ /javafx.*-(win|linux)\.jar/ })
+    delete(fileTree('build/image/sdr-trunk-osx-aarch64-v' + version + '/lib').include { it.name ==~ /javafx.*-(win|linux)\.jar/ })
     delete(fileTree('build/image/sdr-trunk-windows-x86_64-v' + version + '/lib').include { it.name ==~ /javafx.*-(linux|mac)\.jar/ })
 
     //JavaFX web and media modules are transitive dependencies of ControlsFX but are not required for this application
     delete(fileTree('build/image/sdr-trunk-linux-arm64-v' + version + '/lib').include { it.name ==~ /javafx-(web|media)-.*\.jar/ })
     delete(fileTree('build/image/sdr-trunk-linux-x86_64-v' + version + '/lib').include { it.name ==~ /javafx-(web|media)-.*\.jar/ })
     delete(fileTree('build/image/sdr-trunk-osx-x86_64-v' + version + '/lib').include { it.name ==~ /javafx-(web|media)-.*\.jar/ })
+    delete(fileTree('build/image/sdr-trunk-osx-aarch64-v' + version + '/lib').include { it.name ==~ /javafx-(web|media)-.*\.jar/ })
     delete(fileTree('build/image/sdr-trunk-windows-x86_64-v' + version + '/lib').include { it.name ==~ /javafx-(web|media)-.*\.jar/ })
 }
