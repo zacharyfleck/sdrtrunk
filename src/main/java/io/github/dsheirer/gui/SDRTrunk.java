@@ -340,7 +340,15 @@ public class SDRTrunk implements Listener<TunerEvent>
 
         Dimension dimension = mUserPreferences.getSwingPreference().getDimension(WINDOW_FRAME_IDENTIFIER);
 
-        mSpectralPanel.setPreferredSize(new Dimension(1280, 300));
+        if(SystemProperties.getInstance().get(SpectralDisplayPanel.SPECTRAL_DISPLAY_ENABLED, true))
+        {
+            mSpectralPanel.setPreferredSize(new Dimension(1280, 300));
+        }
+        else
+        {
+            mSpectralPanel.setPreferredSize(new Dimension(1280, 0));
+        }
+
         mControllerPanel.setPreferredSize(new Dimension(1280, 500));
 
         if(dimension != null)
