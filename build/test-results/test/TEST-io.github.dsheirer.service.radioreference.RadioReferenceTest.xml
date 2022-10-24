@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="io.github.dsheirer.service.radioreference.RadioReferenceTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-10-24T02:37:22" hostname="fv-az617-818" time="0.199">
+  <properties/>
+  <testcase name="checkExpDate()" classname="io.github.dsheirer.service.radioreference.RadioReferenceTest" time="0.199"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
