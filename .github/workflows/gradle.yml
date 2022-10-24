@@ -25,3 +25,10 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: clean build
+      - name: Push Changes
+        run: |
+          git config user.name "zacharyfleck"
+          git config user.email "zachary.j.fleck@gmail.com"
+          git add .
+          git commit -m "Push Built Artifact"
+          git push
